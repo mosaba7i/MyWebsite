@@ -1,0 +1,721 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',sans-serif; background:#000; color:#fff;
+background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+background-size: 3px 3px; cursor: none; }
+
+nav { position:fixed; top:0; width:100%; padding:22px 40px;
+background:black; display:flex; justify-content:space-between; z-index:10;
+border-bottom:1px solid rgba(255,255,255,0.1); }
+nav h1 {
+  /* replaced: use 8-bit / pixel font and crisp pixel outline */
+  font-family: "Press Start 2P", monospace;
+  font-weight: 400;
+  font-size: 27px;          /* compact header size to match Press Start proportions */
+  letter-spacing: 0.6px;
+  color: #e6f7ff;
+  line-height: 1;
+  margin: 0;
+  /* layered hard shadows to simulate an 8-bit / pixel outline */
+  text-shadow:
+    1px 0 0 #0b0b0b,
+    -1px 0 0 #0b0b0b,
+    0 1px 0 #0b0b0b,
+    0 -1px 0 #0b0b0b,
+    1px 1px 0 #0b0b0b,
+    -1px -1px 0 #0b0b0b,
+    2px 0 0 rgba(0,0,0,0.65); /* slight additional depth */
+  /* keep font rendering crisp (avoid smoothing) */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeSpeed;
+  /* prevent wrapping so the pixel wordmark stays intact */
+  white-space: nowrap;
+  /* ensure it's treated as inline block inside the .brand */
+  display: inline-block;
+  margin: 0;
+}
+
+/* new: group title + divider so they stay together on the left */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px; /* space between title and line */
+  min-height: 1; /* avoid layout jump */
+}
+
+/* new: vertical divider to the right of the title */
+.nav-vertical {
+  /* increased brightness and opacity, slightly taller for emphasis */
+  width: 2px;
+  height: 30px; /* slightly taller */
+  background: linear-gradient(180deg,
+    rgba(255,255,255,0.22) 0%,
+    rgba(255,255,255,0.14) 60%,
+    rgba(255,255,255,0.08) 100%);
+  border-radius: 2px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+  margin-left: 8px;
+  transform-origin: center;
+  opacity: 1; /* fully visible */
+  transition: transform 160ms ease, box-shadow 160ms ease, opacity 160ms ease;
+}
+
+/* responsive: slightly reduce divider height on small screens */
+@media (max-width: 520px) {
+  .nav-vertical { height: 40px; width: 1.8px; }
+}
+
+nav ul { list-style:none; display:flex; gap:24px; }
+nav li { cursor:none; opacity:0.5; position:relative; transition:0.3s; }
+nav li::after { content:""; position:absolute; left:0; bottom:-6px; width:0; height:1px; background:white; transition:0.3s; }
+nav li.active, nav li:hover { opacity:1; }
+nav li.active::after { width:100%; }
+
+main { max-width:900px; margin:auto; padding-top:140px; position:relative; min-height:400px; }
+.tabs-container { position:relative; }
+
+.tab { position:absolute; width:100%; left:0; top:0; opacity:0; transform:translateY(10px);
+transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:none; visibility:hidden; }
+.tab.active { opacity:1; transform:translateY(0); position:relative; pointer-events:auto; visibility:visible; }
+
+h2 { font-size:44px; font-weight:700; margin-bottom:24px; }
+p, li { font-size:16px; opacity:0.75; line-height:1.7; }
+
+.profile-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;      /* center image and SVG exactly */
+  width: 210px;             /* reduced: ~2x smaller */
+  height: 210px;
+  border-radius: 50%;
+  padding: 0;               /* no internal padding to avoid shifting */
+  box-sizing: border-box;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1);
+  will-change: transform;
+  z-index: 1;
+  -webkit-tap-highlight-color: transparent;
+  margin-top: 40px;      /* push the whole box further from the top/nav */
+  margin-bottom: 40px;   /* increase gap between pfp and "Hello." */
+  padding: 10px;         /* extra internal padding so ring/glow sits away from image */
+}
+
+/* the profile image — fill the wrapper exactly, border included */
+.profile-pic {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;   /* include border in sizing so image stays centered */
+  display: block;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.12);
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(10%);
+  transition: filter 360ms ease, transform 360ms cubic-bezier(.2,.9,.2,1), box-shadow 420ms ease;
+  will-change: transform, filter, box-shadow;
+}
+
+/* subtle lift + desaturation removal on hover — adjusted for new size */
+.profile-wrap:hover .profile-pic,
+.profile-wrap:focus-within .profile-pic {
+  transform: translateY(-8px) scale(1.02);
+  filter: grayscale(0%);
+  box-shadow: 0 14px 60px rgba(0,0,0,0.55), 0 0 28px rgba(139,233,253,0.04);
+}
+
+/* glowing ring using pseudo-element — inset increased to match padding */
+.profile-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -14px; /* larger so glow expands smoothly outside wrapper */
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0.9);
+  opacity: 0;
+  transition: transform 560ms cubic-bezier(.2,.9,.2,1), opacity 560ms ease, box-shadow 560ms ease;
+  box-shadow: 0 0 0 0 rgba(139,233,253,0.00);
+  z-index: 0;
+}
+
+.profile-wrap:hover::before,
+.profile-wrap:focus-within::before {
+  transform: scale(1.06);
+  opacity: 1;
+  box-shadow: 0 0 28px 10px rgba(139,233,253,0.08), 0 28px 80px rgba(126,245,168,0.05);
+}
+
+/* SVG zigzag ring positioning (unchanged, now aligns with centered image) */
+.zigzag {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  z-index: 2;
+  display: block;
+}
+
+/* path initial hidden state (unchanged) */
+.zig-path {
+  stroke: #d0e7ec;
+  stroke-opacity: 0.0;
+  transition: stroke-opacity 420ms ease, stroke-dashoffset 1600ms cubic-bezier(.2,.9,.2,1), transform 420ms ease;
+  stroke-dasharray: 48 32 24 32;
+  stroke-dashoffset: 1000;
+  filter: url(#soft);
+  transform: scale(1);
+}
+
+.profile-wrap:hover .zig-path,
+.profile-wrap:focus-within .zig-path {
+  stroke-opacity: 0.95;
+  stroke-dashoffset: 0;
+  transform: scale(1.02);
+}
+
+/* make the zigzag stroke a bit thicker to match new scale */
+.zig-path {
+  stroke-width: 7;
+  /* ...existing properties... */
+}
+
+/* responsive: scale padding/inset down on smaller screens */
+@media (max-width: 980px) {
+  .profile-wrap { width: 160px; height: 160px; padding: 8px; }
+  .profile-wrap::before { inset: -10px; }
+}
+@media (max-width: 600px) {
+  .profile-wrap { width: 110px; height: 110px; padding: 6px; }
+  .profile-wrap::before { inset: -8px; }
+}
+
+#about { display:flex; flex-direction:column; align-items:center; text-align:center; }
+
+.photo-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:28px; margin-top:40px; }
+.photo-gallery img { width:100%; height:360px; object-fit:cover; filter:grayscale(100%) contrast(1.05); transition:0.4s ease; }
+.photo-gallery img:first-child { grid-row:span 2; }
+.photo-gallery img:hover { filter:grayscale(0%); transform:scale(1.03); cursor:pointer; }
+
+.hobbies-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:28px; margin-top:40px; }
+.hobby-card { background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; text-align:center; transition: transform 0.3s ease, background 0.3s ease; cursor:pointer; }
+.hobby-card:hover { transform:translateY(-6px); background:rgba(255,255,255,0.12); }
+.hobby-card h3 { font-size:22px; margin-bottom:12px; }
+.hobby-card p { font-size:15px; opacity:0.7; line-height:1.6; margin-bottom:12px; }
+.hobby-card img { width:100%; height:160px; object-fit:cover; border-radius:8px; filter:grayscale(50%); transition:filter 0.3s ease, transform 0.3s ease; }
+.hobby-card img:hover { filter:grayscale(0%); transform:scale(1.05); }
+
+.hobby-details { display:none; margin-top:30px; position:relative; }
+.subtab { display:none; opacity:0; transform:translateY(10px); transition:opacity 0.4s ease, transform 0.4s ease; }
+.subtab.active { display:block; opacity:1; transform:translateY(0); }
+
+.back-btn { margin-top:20px; padding:8px 16px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:white; cursor:pointer; border-radius:8px; transition:all 0.3s ease; }
+.back-btn:hover { background:rgba(255,255,255,0.2); transform:scale(1.05); }
+
+.writing-full { display:none; line-height:1.6; opacity:0.85; margin-top:12px; }
+.show-more { color: #fff; cursor:pointer; text-decoration:underline; }
+.show-more:hover { opacity:0.8; }
+
+.social-icons { display:flex; justify-content:center; gap:50px; margin-top:60px; }
+.social-icons a { width:72px; height:72px; border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; font-size:34px; color:white; opacity:0.65; text-decoration:none; transition:all 0.3s ease; }
+.social-icons a:hover { opacity:1; transform:scale(1.15); border-color:white; }
+
+footer { text-align:center; padding:40px 20px 20px; color:rgba(255,255,255,0.6); font-size:14px; }
+.footer-line { width:80%; height:1px; background:rgba(255,255,255,0.15); margin:0 auto 20px; }
+
+.single-player {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  margin-top:14px;
+  position:relative;
+}
+
+/* circular play button */
+#gym-play {
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  display:inline-grid;
+  place-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color:#fff;
+  font-size:20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  cursor: none !important;
+  transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  backdrop-filter: blur(6px);
+  user-select: none;
+}
+
+/* playing state */
+#gym-play.playing {
+  transform: scale(1.06);
+  background: linear-gradient(90deg, rgba(139,233,253,0.06), rgba(126,245,168,0.04));
+  box-shadow: 0 10px 36px rgba(34,197,94,0.06);
+}
+
+/* hover subtle (visual only, cursor hidden globally) */
+#gym-play:hover { transform: scale(1.08); }
+
+/* tooltip hidden by default, revealed on hover/focus of the play button */
+.gym-tooltip {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  background: rgba(20,20,20,0.95);
+  color: #e6f7ff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.3;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none; /* don't block clicks */
+  transition: opacity 160ms ease, transform 160ms ease;
+  white-space: pre-line;
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+
+/* show on hover of the button only (remove :focus to prevent tooltip sticking when button keeps focus) */
+#gym-play:hover + .gym-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* smaller on narrow screens */
+@media (max-width:480px) {
+  #gym-play { width:48px; height:48px; font-size:18px; }
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(0.000002px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 420ms cubic-bezier(.2,.9,.2,1), visibility 420ms ease;
+}
+.lightbox.show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.lightbox-inner {
+  max-width: 92%;
+  max-height: 82%;
+  text-align: center;
+  position: relative;
+}
+.lightbox img {
+  max-width: 100%;
+  max-height: 72vh;
+  border-radius: 8px;
+  box-shadow: 0 30px 120px rgba(0,0,0,0.75);
+  transform: scale(0.98);
+  opacity: 0;
+  transition: transform 420ms cubic-bezier(.2,.9,.2,1), opacity 420ms ease;
+}
+.lightbox.show img { transform: scale(1); opacity: 1; }
+
+/* caption under image */
+.lightbox-caption {
+  margin-top: 12px;
+  color: rgba(255,255,255,0.9);
+  font-size: 14px;
+  line-height: 1.4;
+  max-width: 900px;
+  padding: 6px 10px;
+  opacity: 0.95;
+  text-align: center;
+}
+
+/* close and nav buttons */
+.lightbox .close,
+.lightbox .lightbox-nav {
+  position: absolute;
+  background: rgba(10,10,10,0.6);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.06);
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  font-size: 28px;
+  cursor: pointer;
+  z-index: 1001;
+  transition: transform 220ms ease, box-shadow 220ms ease, background 220ms ease;
+}
+.lightbox .close { top: 18px; right: 22px; }
+.lightbox .lightbox-prev { left: 14px; top: 50%; transform: translateY(-50%); }
+.lightbox .lightbox-next { right: 14px; top: 50%; transform: translateY(-50%); }
+
+.lightbox .lightbox-nav:hover,
+.lightbox .close:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 18px rgba(139,233,253,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+}
+
+/* hide nav on very small screens to avoid overlap */
+@media (max-width: 520px) {
+  .lightbox .lightbox-nav { display: none; }
+  .lightbox img { max-height: 60vh; }
+}
+
+/* reduce motion fallback */
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox img, .lightbox .close, .lightbox .lightbox-nav {
+    transition: none !important;
+  }
+}
+
+/* Minimal dot cursor */
+body { cursor: none; }
+
+/* Ensure the native system cursor stays hidden on clickable elements.
+   Keep inputs/textarea untouched so text caret remains usable. */
+a, button, nav li, .hobby-card, .hobby-card *, .photo-gallery img, .cat-gallery img, .back-btn, .lightbox .close, .social-icons a {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-trail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+}
+
+.cursor-dot {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 120ms ease, opacity 120ms ease;
+  box-shadow: 0 0 6px rgba(255,255,255,0.08);
+  will-change: transform, left, top;
+}
+
+.cursor-dot.grow {
+  transform: translate(-50%, -50%) scale(1.6);
+}
+
+/* Trail dots — simple, non-blurred circular dots forming the tail */
+.cursor-trail {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 99998;
+  background: rgba(255,255,255,0.85);
+  border-radius: 50%;
+  will-change: left, top, opacity, transform;
+}
+
+/* default trail size — individual sizes/opacity adjusted in JS */
+.cursor-trail.small { width: 6px; height: 6px; opacity: 0.7; }
+.cursor-trail.xsmall { width: 5px; height: 5px; opacity: 0.55; }
+.cursor-trail.xxsmall { width: 4px; height: 4px; opacity: 0.4; }
+
+/* keep trail slightly smaller on narrow screens */
+@media (max-width: 480px) {
+  .cursor-dot { width: 6px; height: 6px; }
+  .cursor-trail.small { width: 5px; height: 5px; }
+  .cursor-trail.xsmall { width: 4px; height: 4px; }
+  .cursor-trail.xxsmall { width: 3px; height: 3px; }
+}
+
+/* centered Amman clock inside nav */
+.amman-clock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 120px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(139,233,253,0.06);
+  color: #e6f7ff;
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  text-align: center;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.6), 0 0 10px rgba(139,233,253,0.03) inset;
+  backdrop-filter: blur(6px);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+  cursor: none !important;
+  user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 11; /* ensure it sits above nav content */
+}
+
+/* time / date styling inside the pill (unchanged) */
+.amman-clock .time { font-size:14px; font-weight:700; letter-spacing:0.8px; }
+.amman-clock .label { font-size:10px; opacity:0.75; }
+
+/* responsive: adjust size and keep label hidden on very small screens */
+@media (max-width:520px) {
+  .amman-clock { min-width:80px; padding:6px 10px; transform: translate(-50%, -50%) scale(0.95); }
+  .amman-clock .label { display:none; }
+}
+
+/* starfield canvas sits behind UI but above page background */
+#starfield {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;             /* below nav (nav has z-index:10) but above raw background */
+  pointer-events: none;   /* don't block clicks */
+  display: block;
+  mix-blend-mode: screen; /* gentle glow blending */
+}
+
+/* ensure main content renders above the star canvas */
+main { position: relative; z-index: 1; }
+
+/* Ensure native cursor stays hidden over the starfield and any canvas.
+   Use !important so third-party/agent styles can't re-enable the system cursor. */
+#starfield,
+canvas,
+html,
+body {
+  cursor: none !important;
+}
+
+/* small performance fallback for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #starfield { display: none; }
+}
+
+/* Library-style photo gallery (book-like cards with "roof") */
+.photo-gallery.library {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 28px;
+  margin-top: 40px;
+  align-items: start;
+}
+
+/* wrapper groups roof + book card so the roof sits above the image */
+.book-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* simple CSS "roof" — a tiny pediment above the picture */
+.book-wrap .roof {
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 12px solid rgba(255,255,255,0.06);
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,0.45));
+  transition: transform 320ms cubic-bezier(.2,.9,.2,1), border-color 320ms ease;
+}
+
+/* the framed book/photo card */
+.book {
+  background: rgba(255,255,255,0.02);
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  transition: transform 320ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
+  will-change: transform, box-shadow;
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* image inside book — tuned height for consistent cards */
+.book img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+  filter: grayscale(8%);
+  transition: transform 300ms ease, filter 300ms ease;
+}
+
+/* caption like a book title under the cover */
+.book figcaption {
+  width: 100%;
+  font-size: 13px;
+  color: rgba(255,255,255,0.85);
+  text-align: left;
+  padding: 0 6px 8px;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* hover: lift the card and give subtle glow, roof reacts */
+.book-wrap:hover .book,
+.book:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.6), 0 0 18px rgba(139,233,253,0.03);
+}
+
+.book-wrap:hover .roof {
+  transform: translateY(-4px) scaleX(1.03);
+  border-bottom-color: rgba(255,255,255,0.12);
+}
+
+/* Responsive main container and tab stacking for mobile */
+@media (max-width: 600px) {
+  main {
+    padding-top: 90px;
+    max-width: 100vw;
+    min-width: 0;
+  }
+  .tabs-container {
+    width: 100vw;
+    min-width: 0;
+    padding: 0 2vw;
+  }
+  .tab {
+    position: relative !important;
+    width: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 0;
+  }
+  h2 {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  p, li {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+}
+
+/* Responsive nav for mobile */
+@media (max-width: 600px) {
+  nav {
+    padding: 12px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  nav ul {
+    gap: 12px;
+    font-size: 15px;
+    flex-wrap: wrap;
+  }
+  .brand h1 {
+    font-size: 18px;
+  }
+}
+
+/* Responsive photo gallery grid and images */
+@media (max-width: 600px) {
+  .photo-gallery,
+  .photo-gallery.library {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .photo-gallery img,
+  .cat-gallery img,
+  .book img {
+    height: 160px !important;
+    min-height: 120px;
+    max-height: 180px;
+  }
+  .book {
+    padding: 6px;
+  }
+}
+
+/* Responsive hobbies grid and cards */
+@media (max-width: 600px) {
+  .hobbies-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 18px;
+  }
+  .hobby-card img {
+    height: 120px;
+  }
+  .hobby-card {
+    padding: 12px;
+  }
+}
+
+/* Responsive Amman clock */
+@media (max-width: 600px) {
+  .amman-clock {
+    min-width: 70px;
+    font-size: 11px;
+    padding: 4px 6px;
+  }
+  .amman-clock .time {
+    font-size: 12px;
+  }
+}
+
+/* Responsive footer */
+@media (max-width: 600px) {
+  footer {
+    padding: 24px 6px 10px;
+    font-size: 12px;
+  }
+  .footer-line {
+    width: 98%;
+    margin-bottom: 10px;
+  }
+  .single-player {
+    margin-top: 8px;
+  }
+}
+
+/* Responsive social icons */
+@media (max-width: 600px) {
+  .social-icons {
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .social-icons a {
+    width: 38px;
+    height: 38px;
+    font-size: 18px;
+  }
+}
+
+/* Responsive lightbox */
+@media (max-width: 600px) {
+  .lightbox-inner {
+    max-width: 99vw;
+    max-height: 80vh;
+  }
+  .lightbox img {
+    max-height: 48vh;
+  }
+  .lightbox-caption {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+}

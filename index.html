@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mohammed Al-Sabahi | Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+<nav>
+  <div class="brand" aria-hidden="false">
+    <h1>M</h1>
+    <span class="nav-vertical" aria-hidden="true"></span>
+  </div>
+  <ul>
+    <li class="active" data-tab="about">About</li>
+    <li data-tab="projects">Projects</li>
+    <li data-tab="photos">Photos</li>
+    <li data-tab="hobbies">Hobbies</li>
+    <li data-tab="socials">Socials</li>
+    <li data-tab="cats">Cats</li>
+  </ul>
+
+  <!-- Amman clock (Jordan time) -->
+  <div id="amman-clock" class="amman-clock" aria-live="polite" title="Jordan Time">--:--:--</div>
+</nav>
+
+<main>
+  <div class="tabs-container">
+
+    <!-- About -->
+    <section id="about" class="tab active">
+      <!-- profile wrapper with SVG zigzag ring -->
+      <div class="profile-wrap" aria-hidden="false">
+        <img src="me.jpeg" alt="Mohammed Al-Sabahi Profile Picture" class="profile-pic">
+        <!-- SVG ring - drawn on hover -->
+        <svg class="zigzag" viewBox="0 0 520 520" aria-hidden="true" focusable="false">
+          <defs>
+            <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="6" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <!-- use percentages so the circle always centers the image -->
+          <circle cx="49.3%" cy="46.7%" r="46%" fill="none" stroke="#8be9fd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="zig-path" />
+        </svg>
+      </div>
+
+      <h2>Hey</h2>
+      <p>
+        Computer and Software Engineering student focused on Developing Websites and Web Applications,
+        systems programming, and clean minimal design.
+      </p>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="tab">
+      <h2>Projects</h2>
+      <p>push_swap · Born2BeRoot · system-level Linux projects</p>
+    </section>
+
+    <!-- Photos -->
+    <section id="photos" class="tab">
+      <h2>Photos</h2>
+
+      <div class="photo-gallery library">
+        <div class="book-wrap">
+          <div class="roof" aria-hidden="true"></div>
+          <figure class="book">
+            <img src="https://picsum.photos/id/1011/800/1000" alt="Forest path">
+            <figcaption>Forest Path — Autumn light</figcaption>
+          </figure>
+        </div>
+
+        <div class="book-wrap">
+          <div class="roof" aria-hidden="true"></div>
+          <figure class="book">
+            <img src="https://picsum.photos/id/1015/800/1000" alt="Mountain view">
+            <figcaption>Mountain View — Morning</figcaption>
+          </figure>
+        </div>
+
+        <div class="book-wrap">
+          <div class="roof" aria-hidden="true"></div>
+          <figure class="book">
+            <img src="https://picsum.photos/id/1025/800/1000" alt="City street">
+            <figcaption>City Street — Neon</figcaption>
+          </figure>
+        </div>
+
+        <div class="book-wrap">
+          <div class="roof" aria-hidden="true"></div>
+          <figure class="book">
+            <img src="https://picsum.photos/id/1035/800/1000" alt="Coastline">
+            <figcaption>Coastline — Wind</figcaption>
+          </figure>
+        </div>
+
+        <div class="book-wrap">
+          <div class="roof" aria-hidden="true"></div>
+          <figure class="book">
+            <img src="https://picsum.photos/id/1043/800/1000" alt="Portrait">
+            <figcaption>Portrait — Candid</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cat Collection -->
+    <section id="cats" class="tab">
+      <h2>Cat Collection</h2>
+      <p>All the cat photos I've taken. Each photo has a short note on how I met them and their name.</p>
+
+      <div class="photo-gallery cat-gallery">
+        <figure>
+          <img src="https://placekitten.com/800/1000" alt="Mochi - met near the coffee shop, very curious">
+          <figcaption><strong>Mochi</strong> — I met Mochi outside a small coffee shop; followed me for a whole block.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://placekitten.com/801/1000" alt="Nimbus - found shelter under my car during a rainstorm">
+          <figcaption><strong>Nimbus</strong> — Sheltered under my car during a rainstorm; calmed right down when I offered a tuna snack.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://placekitten.com/802/1000" alt="Pixel - wandered into my dorm room while I was debugging">
+          <figcaption><strong>Pixel</strong> — Wandered into my dorm while I was debugging; stayed on my keyboard until I pet it.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://placekitten.com/803/1000" alt="Sushi - a friendly neighborhood cat who loves backpacks">
+          <figcaption><strong>Sushi</strong> — Neighborhood regular who loves to hop into backpacks; always greets me at the gate.</figcaption>
+        </figure>
+
+        <figure>
+          <img src="https://placekitten.com/804/1000" alt="Gizmo - the shy cat I found hiding behind crates">
+          <figcaption><strong>Gizmo</strong> — Shy at first, I found Gizmo hiding behind crates; earned trust with slow blinks and treats.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Hobbies -->
+    <section id="hobbies" class="tab">
+      <h2>Hobbies</h2>
+
+      <!-- Hobby Cards Grid -->
+      <div class="hobbies-grid">
+        <div class="hobby-card" data-subtab="guitar">
+          <h3>Guitar</h3>
+          <p>Playing acoustic and electric guitar, composing riffs, and practicing fingerstyle techniques.</p>
+          <img src="https://picsum.photos/id/1050/400/300" alt="Guitar">
+        </div>
+
+        <div class="hobby-card" data-subtab="pixel-art">
+          <h3>Pixel Art</h3>
+          <p>Creating pixel art sprites, retro-style illustrations, and small game assets.</p>
+          <img src="https://picsum.photos/id/1062/400/300" alt="Pixel Art">
+        </div>
+
+        <div class="hobby-card" data-subtab="abandoned-projects">
+          <h3>Abandoned Projects</h3>
+          <p>Exploring experimental coding, small projects that didn’t make it, and prototypes.</p>
+          <img src="https://picsum.photos/id/1072/400/300" alt="Abandoned Projects">
+        </div>
+
+        <div class="hobby-card" data-subtab="writing">
+          <h3>Writing</h3>
+          <p>Short previews of my essays, stories, and thoughts.</p>
+          <img src="https://picsum.photos/id/1110/400/300" alt="Writing">
+        </div>
+      </div>
+
+      <!-- Hobby Details / Subtabs -->
+      <div class="hobby-details">
+
+        <!-- Guitar -->
+        <div id="guitar" class="subtab">
+          <h3>Guitar</h3>
+          <p>Collection of guitar riffs, practice sessions, and live clips.</p>
+          <div class="photo-gallery">
+            <img src="https://picsum.photos/id/1080/400/300" alt="Guitar Photo 1">
+            <img src="https://picsum.photos/id/1081/400/300" alt="Guitar Photo 2">
+          </div>
+          <button class="back-btn">Back</button>
+        </div>
+
+        <!-- Pixel Art -->
+        <div id="pixel-art" class="subtab">
+          <h3>Pixel Art</h3>
+          <p>Photos and screenshots of pixel art projects.</p>
+          <div class="photo-gallery">
+            <img src="https://picsum.photos/id/1090/400/300" alt="Pixel Art 1">
+            <img src="https://picsum.photos/id/1091/400/300" alt="Pixel Art 2">
+          </div>
+          <button class="back-btn">Back</button>
+        </div>
+
+        <!-- Abandoned Projects -->
+        <div id="abandoned-projects" class="subtab">
+          <h3>Abandoned Projects</h3>
+          <p>Snapshots of experimental coding and small projects.</p>
+          <div class="photo-gallery">
+            <img src="https://picsum.photos/id/1100/400/300" alt="Abandoned Project 1">
+            <img src="https://picsum.photos/id/1101/400/300" alt="Abandoned Project 2">
+          </div>
+          <button class="back-btn">Back</button>
+        </div>
+
+        <!-- Writing -->
+        <div id="writing" class="subtab">
+          <h3>Writing</h3>
+          <p class="writing-preview">Here is a preview of my latest essays and thoughts... <span class="show-more">[Read More]</span></p>
+          <p class="writing-full">Here is a preview of my latest essays and thoughts. I like to write about technology, life reflections, cybersecurity experiments, and personal growth. I often explore philosophical ideas, and reflect on the things I learn during my coding and university journey. Writing helps me organize my thoughts, improve communication, and share ideas with others.</p>
+          <button class="back-btn">Back</button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section id="socials" class="tab">
+      <h2>Socials</h2>
+      <div class="social-icons">
+        <a href="https://github.com/mosaba7i" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="https://www.instagram.com/mo_saba7i/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/m.saba7i/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-line"></div>
+  <p>&copy; 2025 Mohammed Al-Sabahi. All rights reserved.</p>
+
+  <!-- single looped Gymnopedie player placed in the footer -->
+  <div class="single-player" aria-hidden="false">
+    <audio id="gym-audio" src="audio/Gymnopedie.mp3" loop preload="none"></audio>
+    <button id="gym-play" aria-pressed="false" title="Play / Pause Gymnopedie">►</button>
+
+    <!-- tooltip shown only on hover/focus of the button -->
+    <div class="gym-tooltip" id="gym-tooltip" role="note" aria-hidden="true">
+      "Gymnopedie No. 1" — Kevin MacLeod<br>
+      Licensed under CC BY 4.0<br>
+      incompetech.com
+    </div>
+  </div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
+  <button class="lightbox-nav lightbox-prev" aria-label="Previous image">‹</button>
+  <button class="lightbox-nav lightbox-next" aria-label="Next image">›</button>
+  <button class="close" aria-label="Close (Esc)">&times;</button>
+  <div class="lightbox-inner">
+    <img id="lightbox-img" alt="">
+    <div class="lightbox-caption" id="lightbox-caption" aria-live="polite"></div>
+  </div>
+</div>
+
+</body>
+</html>
