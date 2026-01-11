@@ -27,19 +27,15 @@
     <li data-tab="cats">Cats</li>
   </ul>
 
-  <!-- Amman clock (Jordan time) -->
   <div id="amman-clock" class="amman-clock" aria-live="polite" title="Jordan Time">--:--:--</div>
 </nav>
 
 <main>
   <div class="tabs-container">
 
-    <!-- About -->
     <section id="about" class="tab active">
-      <!-- profile wrapper with SVG zigzag ring -->
       <div class="profile-wrap" aria-hidden="false">
         <img src="me.jpeg" alt="Mohammed Al-Sabahi Profile Picture" class="profile-pic">
-        <!-- SVG ring - drawn on hover -->
         <svg class="zigzag" viewBox="0 0 520 520" aria-hidden="true" focusable="false">
           <defs>
             <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
@@ -47,7 +43,6 @@
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- use percentages so the circle always centers the image -->
           <circle cx="49.3%" cy="46.7%" r="46%" fill="none" stroke="#8be9fd" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="zig-path" />
         </svg>
       </div>
@@ -59,13 +54,11 @@
       </p>
     </section>
 
-    <!-- Projects -->
     <section id="projects" class="tab">
       <h2>Projects</h2>
       <p>push_swap · Born2BeRoot · system-level Linux projects</p>
     </section>
 
-    <!-- Photos -->
     <section id="photos" class="tab">
       <h2>Photos</h2>
 
@@ -112,7 +105,6 @@
       </div>
     </section>
 
-    <!-- Cat Collection -->
     <section id="cats" class="tab">
       <h2>Cat Collection</h2>
       <p>All the cat photos I've taken. Each photo has a short note on how I met them and their name.</p>
@@ -145,11 +137,9 @@
       </div>
     </section>
 
-    <!-- Hobbies -->
     <section id="hobbies" class="tab">
       <h2>Hobbies</h2>
 
-      <!-- Hobby Cards Grid -->
       <div class="hobbies-grid">
         <div class="hobby-card" data-subtab="guitar">
           <h3>Guitar</h3>
@@ -176,10 +166,8 @@
         </div>
       </div>
 
-      <!-- Hobby Details / Subtabs -->
       <div class="hobby-details">
 
-        <!-- Guitar -->
         <div id="guitar" class="subtab">
           <h3>Guitar</h3>
           <p>Collection of guitar riffs, practice sessions, and live clips.</p>
@@ -190,7 +178,6 @@
           <button class="back-btn">Back</button>
         </div>
 
-        <!-- Pixel Art -->
         <div id="pixel-art" class="subtab">
           <h3>Pixel Art</h3>
           <p>Photos and screenshots of pixel art projects.</p>
@@ -201,7 +188,6 @@
           <button class="back-btn">Back</button>
         </div>
 
-        <!-- Abandoned Projects -->
         <div id="abandoned-projects" class="subtab">
           <h3>Abandoned Projects</h3>
           <p>Snapshots of experimental coding and small projects.</p>
@@ -212,7 +198,6 @@
           <button class="back-btn">Back</button>
         </div>
 
-        <!-- Writing -->
         <div id="writing" class="subtab">
           <h3>Writing</h3>
           <p class="writing-preview">Here is a preview of my latest essays and thoughts... <span class="show-more">[Read More]</span></p>
@@ -223,7 +208,6 @@
       </div>
     </section>
 
-    <!-- Socials -->
     <section id="socials" class="tab">
       <h2>Socials</h2>
       <div class="social-icons">
@@ -240,12 +224,10 @@
   <div class="footer-line"></div>
   <p>&copy; 2025 Mohammed Al-Sabahi. All rights reserved.</p>
 
-  <!-- single looped Gymnopedie player placed in the footer -->
   <div class="single-player" aria-hidden="false">
     <audio id="gym-audio" src="audio/Gymnopedie.mp3" loop preload="none"></audio>
     <button id="gym-play" aria-pressed="false" title="Play / Pause Gymnopedie">►</button>
 
-    <!-- tooltip shown only on hover/focus of the button -->
     <div class="gym-tooltip" id="gym-tooltip" role="note" aria-hidden="true">
       "Gymnopedie No. 1" — Kevin MacLeod<br>
       Licensed under CC BY 4.0<br>
@@ -254,7 +236,6 @@
   </div>
 </footer>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true">
   <button class="lightbox-nav lightbox-prev" aria-label="Previous image">‹</button>
   <button class="lightbox-nav lightbox-next" aria-label="Next image">›</button>
